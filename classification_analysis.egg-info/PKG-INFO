@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: classification-analysis
-Version: 0.0.1
+Version: 0.0.2
 Summary: This library is to monitor your model during the training process and track the metrics to find the best model
 Home-page: https://github.com/Samer92/classification_analysis
 Author: sammer sallam

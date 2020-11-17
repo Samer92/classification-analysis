@@ -158,9 +158,9 @@ class ClassificationAnalysis:
         plt.show()
         
     @staticmethod
-    def misclassification(model, dataset):
+    def misclassification(model, dataset, to_display):
         y_pred = model['best_params']['epoch_data']['y_pred_validation']
-        for i in range(len(y_pred)):
+        for i in range(to_display):
             imgage, class_label = dataset.validation_dataset.imgs[i]
             if class_label != y_pred[i]:
                 img = Image.open(imgage)
