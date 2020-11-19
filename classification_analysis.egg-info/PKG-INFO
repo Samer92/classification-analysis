@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: classification-analysis
-Version: 0.0.2
+Version: 0.0.3
 Summary: This library is to monitor your model during the training process and track the metrics to find the best model
 Home-page: https://github.com/Samer92/classification_analysis
 Author: sammer sallam
@@ -18,6 +18,8 @@ Description:
         ```
         pip install classification_analysis
         ```
+        
+        Refer to the following [notebook](https://github.com/Samer92/classification-analysis/tree/master/example) to see some code examples
 Platform: UNKNOWN
 Classifier: Programming Language :: Python :: 3
 Classifier: License :: OSI Approved :: MIT License

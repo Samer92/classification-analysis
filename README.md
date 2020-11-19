@@ -10,3 +10,5 @@ In order to install, open the command prompt and type:
 ```
 pip install classification_analysis
 ```
+
+Refer to the following [notebook](https://github.com/Samer92/classification-analysis/tree/master/example) to see some code examples
