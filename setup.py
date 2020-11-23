@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="classification_analysis",
-    version="0.0.3",
+    version="0.0.4",
     author="sammer sallam",
     author_email="samersallam92@gmail.com",
     description="This library is to monitor your model during the training process and track the metrics to find the best model",

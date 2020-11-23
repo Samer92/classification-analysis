@@ -25,27 +25,17 @@ class MetricsVisualization:
         'optimizer': ('Optimization Algorithm', 'darkslategray')
     }
 
-    phases = ['train', 'val']
-
-    metrics = ['loss',
-               'overall_accuracy',
-               'overall_cohen_kappa',
-               'overall_recall',
-               'overall_f1_score',
-               'overall_precision',
-               'overall_specificity']
-
     @staticmethod    
     def show_all(classification_analysis):
         # Show confusion metrics, confusion table, and classes metrics 
-        for phase in MetricsVisualization.phases:
+        for phase in ClassificationAnalysis.phases:
             phase_metrics = classification_analysis.get_last_epoch_metrics(phase)
             MetricsVisualization.phase_visualization(phase_metrics)
 
         # Show metric per epoch line plot
-        for metric in MetricsVisualization.metrics:
-            train_metrics = classification_analysis.get_epochs_metric(metric, MetricsVisualization.phases[0])
-            val_metrics = classification_analysis.get_epochs_metric(metric, MetricsVisualization.phases[1])
+        for metric in MetricsClaculation.metrics:
+            train_metrics = classification_analysis.get_epochs_metric(metric, ClassificationAnalysis.phases[0])
+            val_metrics = classification_analysis.get_epochs_metric(metric, ClassificationAnalysis.phases[1])
 
             MetricsVisualization.line_plot(train_metrics, val_metrics, metric)
  
@@ -206,7 +196,7 @@ class MetricsVisualization:
     def line_plot(y_train, y_val, metric):
 
         print('\n')
-        if metric == 'Loss':
+        if metric.lower() == 'loss':
             print('Training {} Min: {:0.3f} in epoch {}, Max: {:0.3f}, Current: {:0.3f}'.format(
                 metric, min(y_train), np.array(y_train).argmin(), max(y_train), y_train[-1]))
             print('Validation {} Min: {:0.3f} in epoch {}, Max: {:0.3f}, Current: {:0.3f}'.format(
@@ -398,6 +388,14 @@ class MetricsVisualization:
         plt.show()
     
 class MetricsClaculation:
+    metrics = ['loss',
+           'overall_accuracy',
+           'overall_cohen_kappa',
+           'overall_recall',
+           'overall_f1_score',
+           'overall_precision',
+           'overall_specificity']
+
     def __init__(self, y_true, y_pred, y_score , loss, number_of_classes, average_type = 'macro', digits_count_fp = 3,classes_labels = None):
         """ Initialization function
             y_true: list or numpy array (number of samples)
@@ -600,19 +598,21 @@ class MetricsClaculation:
         self.roc_auc["macro"] = auc(self.fpr["macro"], self.tpr["macro"]).round(self.digits_count_fp)
 
 class ClassificationAnalysis:
+    phases = ['train', 'val']
+
     def __init__(self):
-        self.epochs_train_metircs = list()
-        self.epochs_val_metircs = list()
+        self.train_epochs_metircs = list()
+        self.val_epochs_metircs = list()
 
-    def add_epoch_train_metircs(self, train_metrics):
-        self.epochs_train_metircs.append(train_metrics)
+    def add_train_epoch_metircs(self, train_metrics):
+        self.train_epochs_metircs.append(train_metrics)
 
-    def add_epoch_val_metircs(self, val_metrics):
-        self.epochs_val_metircs.append(val_metrics)
+    def add_val_epoch_metircs(self, val_metrics):
+        self.val_epochs_metircs.append(val_metrics)
 
     def get_last_epoch_metrics(self, phase):
-        return eval(f'self.epochs_{phase}_metircs[-1]')
+        return eval(f'self.{phase}_epochs_metircs[-1]')
 
     def get_epochs_metric(self, metric, phase):
-        return [eval(f'epoch_metircs.{metric}') for epoch_metircs in eval(f'self.epochs_{phase}_metircs')]
+        return [eval(f'epoch_metircs.{metric}') for epoch_metircs in eval(f'self.{phase}_epochs_metircs')]
 
